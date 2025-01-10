@@ -13,9 +13,9 @@ output "vpc_id" {
   value       = aws_vpc.main.id
 }
 
-output "public_subnet_id" {
-  description = "The ID of the public subnet"
-  value       = aws_subnet.public.id
+output "public_subnet_ids" {
+  description = "The IDs of the public subnets"
+  value       = aws_subnet.public[*].id
 }
 
 output "dynamodb_table_name" {
@@ -28,3 +28,7 @@ output "dynamodb_table_arn" {
   value       = aws_dynamodb_table.app_table.arn
 }
 
+output "alb_dns_name" {
+  description = "The DNS name of the load balancer"
+  value       = aws_lb.main.dns_name
+}

@@ -67,15 +67,27 @@ resource "aws_ecs_task_definition" "app" {
 resource "aws_ecs_service" "app" {
   name            = "${var.app_name}-service"
   cluster         = aws_ecs_cluster.main.id
-  task_definition = aws_ecs_task_definition.app.arn
+  task_definition  = aws_ecs_task_definition.app.arn
   desired_count   = var.ecs_task_desired_count
   launch_type     = "FARGATE"
+  force_new_deployment = true # force a new deployment if the task definition changes
 
   network_configuration {
-    subnets          = [aws_subnet.public.id]
+    subnets          = aws_subnet.public[*].id
     security_groups  = [aws_security_group.ecs_tasks.id]
     assign_public_ip = true
   }
+
+   load_balancer {
+    target_group_arn = aws_lb_target_group.app.arn
+    container_name   = var.app_name
+    container_port   = var.container_port
+  }
+
+  depends_on = [aws_lb_listener.http]
+
+  enable_ecs_managed_tags = true
+  propagate_tags         = "TASK_DEFINITION"  # or "SERVICE"
 
   tags = {
     Name        = "${var.app_name}-service"

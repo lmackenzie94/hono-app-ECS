@@ -65,12 +65,12 @@ resource "aws_iam_role_policy" "ecs_task_dynamodb" {
       {
         Effect = "Allow"
         Action = [
-          "dynamodb:PutItem",
+          # "dynamodb:PutItem",
           "dynamodb:GetItem",
           "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem",
-          "dynamodb:Scan",
-          "dynamodb:Query"
+          # "dynamodb:DeleteItem",
+          # "dynamodb:Scan",
+          # "dynamodb:Query"
         ]
         Resource = aws_dynamodb_table.app_table.arn
       }

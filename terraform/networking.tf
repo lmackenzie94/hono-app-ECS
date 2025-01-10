@@ -17,13 +17,14 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public" {
+  count                   = length(var.availability_zones)
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.subnet_cidr
-  availability_zone       = var.availability_zone
+  cidr_block              = var.public_subnet_cidrs[count.index]
+  availability_zone       = var.availability_zones[count.index]
   map_public_ip_on_launch = true
 
   tags = {
-    Name        = "${var.app_name}-public"
+    Name        = "${var.app_name}-public-${count.index}"
     Environment = var.environment
     Application = var.app_name
   }
@@ -55,7 +56,8 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public" {
-  subnet_id      = aws_subnet.public.id
+  count           = length(var.availability_zones)
+  subnet_id       = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
 
@@ -65,9 +67,36 @@ resource "aws_security_group" "ecs_tasks" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    protocol    = "tcp"
+    protocol    = "tcp" 
     from_port   = var.container_port
     to_port     = var.container_port
+    # cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.alb.id] # Allow inbound traffic from the ALB
+  }
+
+  egress {
+    protocol    = "-1" 
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+  tags = {
+    Name        = "${var.app_name}-sg"
+    Environment = var.environment
+    Application = var.app_name
+  }
+}
+
+resource "aws_security_group" "alb" {
+  name        = "${var.app_name}-alb-sg"
+  description = "Security group for Application Load Balancer"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 80
+    to_port     = 80
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -79,7 +108,7 @@ resource "aws_security_group" "ecs_tasks" {
   }
 
   tags = {
-    Name        = "${var.app_name}-sg"
+    Name        = "${var.app_name}-alb-sg"
     Environment = var.environment
     Application = var.app_name
   }

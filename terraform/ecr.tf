@@ -6,7 +6,13 @@
 
 resource "aws_ecr_repository" "app" {
   name = var.app_name
-  
+
+
+  # scans for common vulnerabilities and exposures
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
   tags = {
     Name        = "${var.app_name}-ecr"
     Environment = var.environment
