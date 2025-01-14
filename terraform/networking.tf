@@ -75,7 +75,8 @@ resource "aws_security_group" "ecs_tasks" {
   }
 
   egress {
-    protocol    = "-1" 
+    # protocol    = "-1" # all protocols
+    protocol    = "tcp"
     from_port   = 0
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"] 
@@ -112,7 +113,7 @@ resource "aws_security_group" "alb" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"
+    protocol    = "-1" # all protocols (setting to "tcp" causes 504 Gateway Timeout)
     cidr_blocks = ["0.0.0.0/0"]
   }
 
