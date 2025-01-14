@@ -4,6 +4,19 @@
 # It serves as the main connection point to AWS for all other resources.
 # --------------------------------------
 
+# Terraform configuration 
+# Defines the required providers and their versions.
+# By default, Terraform installs providers from the [Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest).
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+# AWS Provider configuration
 provider "aws" {
   region  = var.aws_region
   profile = var.aws_profile
