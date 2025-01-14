@@ -25,10 +25,32 @@ terraform/
 ├── ecs.tf
 ├── dynamodb.tf
 ├── alb.tf
+├── acm.tf
+├── cloudwatch.tf
 ├── variables.tf
 ├── outputs.tf
 └── dev.auto.tfvars
 ```
+
+**The infrastructure created includes:**
+
+- VPC with public subnets
+
+- ECS Cluster with Fargate
+
+- ECR Repository
+
+- IAM roles and policies
+
+- DynamoDB table
+
+- Security groups
+
+- Application Load Balancer
+
+- ACM Certificate for HTTPS
+
+- CloudWatch log groups
 
 ## Provider
 
@@ -528,7 +550,7 @@ environment = "dev"
 # ... more variable values
 ```
 
-**NOTE**: When running terraform CLI commands, we don't have to specify the `-var-file` flag because `.auto.tfvars` tells terraform to automatically use the variables in this file.
+> When running Terraform CLI commands, we don't have to specify the `-var-file` flag because `.auto.tfvars` tells Terraform to automatically use the variables in this file.
 
 ## Outputs
 
@@ -544,73 +566,56 @@ output "ecs_cluster_name" {
 
 ## Deployment Process
 
-Initialize Terraform :
+**Initialize Terraform (only once):**
 
 ```bash
 terraform init
 ```
 
-Plan the deployment :
+**Plan the deployment:**
 
-**NOTE**: The `-out` flag is used to save the plan to a file. This ensures the exact changes you reviewed are what gets applied.
+> The `-out` flag is used to save the plan to a file. This ensures the exact changes you reviewed are what gets applied.
 
 ```bash
 terraform plan -out=tfplan
 ```
 
-Apply the configuration :
+**Apply the configuration:**
 
 ```bash
 terraform apply tfplan
 ```
 
-Build and push your Docker image :
+**Build and push your Docker image (if it changed):**
 
 ```bash
-docker build -t your-app .
+docker build --platform linux/amd64 -t your-app .
 docker tag your-app:latest $ECR_REPO_URL:latest
 docker push $ECR_REPO_URL:latest
 ```
 
-## Best Practices
+> Have to explicitly build for linux/amd64 platform because I'm using an Apple Silicon Mac which creates an ARM-based image but AWS Fargate runs on x86_64 (amd64) architecture.
 
-Use separate tfvars files for different environments
+## Cleanup
 
-Implement proper tagging strategy
-
-Use multiple availability zones for high availability
-
-Implement proper health checks
-
-Set up monitoring and logging
-
-Use proper security groups and network ACLs
-
-Implement proper backup and disaster recovery strategies
-
-**Cleanup**
 To destroy the infrastructure:
 
 ```bash
-terraform destroy -var-file=dev.tfvars
+terraform destroy
 ```
 
-This configuration creates a production-ready ECS deployment with proper networking, security, and scalability considerations. Remember to adjust the configuration based on your specific requirements and security needs.
+## Best Practices
 
-The infrastructure created includes:
+- Use separate `tfvars` files for different environments
 
-VPC with public subnets
+- Implement proper tagging strategy
 
-ECS Cluster with Fargate
+- Use multiple availability zones for high availability
 
-ECR Repository
+- Implement proper health checks
 
-IAM roles and policies
+- Set up monitoring and logging
 
-DynamoDB table
+- Use proper security groups and network ACLs
 
-Security groups
-
-CloudWatch log groups
-
-This setup provides a solid foundation for running containerized applications on AWS ECS.
+- Implement proper backup and disaster recovery strategies
