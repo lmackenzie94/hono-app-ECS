@@ -26,9 +26,10 @@ aws dynamodb create-table \
    - This will open a browser window to login to AWS.
 2. `terraform init` from the `terraform` directory
    - This will create a `.terraform` directory and download the necessary providers.
-3. `terraform plan`
+3. `terraform plan -out=tfplan`
    - This will show you the changes that will be made to your AWS resources.
-4. `terraform apply`
+   - The `-out=tfplan` flag will save the plan to a file.
+4. `terraform apply tfplan`
    - If running for the first time, this will create the necessary AWS resources.
    - If running again, this will update the existing resources.
 5. Go to ECR in the AWS console and find the repository you created > `View push commands`
@@ -45,3 +46,11 @@ aws dynamodb create-table \
 9. `aws ecs update-service --cluster hono-app-cluster --service hono-app-service --force-new-deployment --profile admin --region us-east-1`
    - This will update the ECS service to use the new Docker image.
    - **NOTE**: Had to add `--profile admin` to the command.
+
+## To Do
+
+- [ ] lock down ALB DNS Name URL ("hono-app-alb-351534744.us-east-1.elb.amazonaws.com") - should not be able to access the app via this URL (I think..?)
+- [ ] set up CI/CD pipeline to build the Docker image and push it to ECR
+- [ ] Auto re-deploy ECS service when the Docker image is updated in ECR
+- [ ] Try destroying and recreating the app from scratch
+- [ ] Auto-scaling - spin up task/instance on request instead of having one always running (to save money). Downside: cold start time.

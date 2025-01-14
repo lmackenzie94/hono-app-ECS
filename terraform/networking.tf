@@ -93,17 +93,26 @@ resource "aws_security_group" "alb" {
   description = "Security group for Application Load Balancer"
   vpc_id      = aws_vpc.main.id
 
+  # allow inbound traffic on port 80, which will be redirected to port 443
   ingress {
-    protocol    = "tcp"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # allow inbound traffic on port 443
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    protocol    = "-1"
     from_port   = 0
     to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 

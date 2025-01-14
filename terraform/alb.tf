@@ -27,13 +27,15 @@ resource "aws_lb_target_group" "app" {
   target_type = "ip"
 
   health_check {
-    healthy_threshold   = "3"
-    interval           = "60"
-    protocol           = "HTTP"
-    matcher            = "200"
-    timeout            = "3"
-    path              = "/health"
-    unhealthy_threshold = "2"
+    enabled             = true
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    interval            = 30
+    timeout             = 5
+    path                = "/health"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    matcher             = "200"
   }
 
   tags = {
@@ -43,13 +45,39 @@ resource "aws_lb_target_group" "app" {
   }
 }
 
+# ALB HTTPS Listener
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.main.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = aws_acm_certificate.cert.arn
+
+  # wait for the certificate to be validated before creating the listener
+  depends_on = [aws_acm_certificate_validation.cert]
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.app.arn
+  }
+}
+
+# ALB HTTP Listener to redirect HTTP to HTTPS
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.main.arn
   port              = 80
   protocol          = "HTTP"
 
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app.arn
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+      host        = "#{host}"
+      path        = "/#{path}"
+      query       = "#{query}"
+    }
   }
 }

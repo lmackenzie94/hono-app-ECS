@@ -1,5 +1,7 @@
 # Hono Counter App with AWS ECS
 
+https://hono-ecs.lukelearnsthe.cloud
+
 This is a simple Hono Node.js application that implements a view counter using AWS DynamoDB and is deployed on AWS ECS Fargate.
 
 ## Architecture
@@ -35,4 +37,6 @@ This is a simple Hono Node.js application that implements a view counter using A
 - DynamoDB table for storing the counter
 - Application Load Balancer
 - Security Groups and IAM roles
+- ACM Certificate for SSL/TLS
+- Route 53 DNS records for the subdomain
 - CloudWatch Logs for monitoring

@@ -50,12 +50,55 @@ app.get('/', async c => {
       <html>
         <head>
           <title>View Counter</title>
+          <style>
+          body {
+            font-family: sans-serif;
+            margin-top: 2rem;
+            background-color: #f5f5f5;
+            text-align: center;
+            line-height: 1.3;
+          }
+          main {
+            width: min(100%, 800px);
+            margin: 0 auto;
+          }
+          h1 {
+            font-weight: bold;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #ccc;
+          }
+          p {
+            font-size: 1.1rem;
+          }
+          button {
+            display: block;
+            font-size: 1.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0rem auto;
+          }
+          button:hover {
+            background-color: #0069d9;
+          }
+        </style>
         </head>
         <body>
-          <h1>Current Views: ${count}</h1>
-          <form action="/increment" method="post">
-            <button type="submit">Increment Counter</button>
-          </form>
+          <header>
+            <h1>Current Views: ${count}</h1>
+          </header>
+          <main>
+           <p>
+            This is a simple <strong>Hono</strong> Node.js application that implements a view counter using <strong>AWS DynamoDB</strong> and is deployed on <strong>AWS ECS Fargate</strong>. The infrastructure is managed using <strong>Terraform</strong>, which (among other things) provisions an <strong>Application Load Balancer</strong> to distribute traffic across multiple container instances. The application's <strong>Docker image</strong> is stored in <strong>Amazon Elastic Container Registry (ECR)</strong>.
+           </p>
+            <form action="/increment" method="post">
+              <button type="submit">Add a view 👀</button>
+            </form>
+          </main>
         </body>
       </html>
     `);

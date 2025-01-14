@@ -98,7 +98,7 @@ resource "aws_route_table_association" "public" {
 }
 ```
 
-**Security Group**
+**Security Group for ECS Tasks**
 
 ```hcl
 resource "aws_security_group" "ecs_tasks" {
@@ -125,6 +125,8 @@ resource "aws_security_group" "ecs_tasks" {
 
 **Security Group for ALB**
 
+Allows inbound traffic from the internet on port 80 (HTTP) and 443 (HTTPS).
+
 ```hcl
 resource "aws_security_group" "alb" {
   name        = "${var.app_name}-alb-sg"
@@ -132,16 +134,23 @@ resource "aws_security_group" "alb" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    protocol    = "tcp"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    protocol    = "-1"
     from_port   = 0
     to_port     = 0
+    protocol    = "-1" # all protocols
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -378,18 +387,44 @@ resource "aws_lb_target_group" "app" {
   target_type = "ip"
 
   health_check {
-    healthy_threshold   = "3"
-    interval           = "60"
-    protocol           = "HTTP"
-    matcher            = "200"
-    timeout            = "3"
-    path              = "/health"
-    unhealthy_threshold = "2"
+    enabled             = true
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    interval            = 30
+    timeout             = 5
+    path                = "/health"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    matcher             = "200"
   }
 }
 ```
 
-**Listener**
+**HTTPS Listener**
+
+Listens for HTTPS traffic on port 443 and forwards it to the target group. Also registers the ACM certificate with the ALB.
+
+```hcl
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.main.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = aws_acm_certificate.cert.arn
+
+  # wait for the certificate to be validated before creating the listener
+  depends_on = [aws_acm_certificate_validation.cert]
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.app.arn
+  }
+}
+```
+
+**HTTP Listener**
+
+Redirects HTTP traffic on port 80 to HTTPS on port 443.
 
 ```hcl
 resource "aws_lb_listener" "http" {
@@ -398,8 +433,51 @@ resource "aws_lb_listener" "http" {
   protocol          = "HTTP"
 
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app.arn
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+      host        = "#{host}"
+      path        = "/#{path}"
+      query       = "#{query}"
+    }
+  }
+}
+```
+
+## Domain & ACM Certificate
+
+The `acm.tf` file creates an ACM certificate for our domain:
+
+**ACM Certificate**
+
+```hcl
+resource "aws_acm_certificate" "cert" {
+  domain_name       = "${var.subdomain_name}.${var.domain_name}"
+  validation_method = "DNS"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+```
+
+**A Record**
+
+Pointing the subdomain to the ALB.
+
+```hcl
+resource "aws_route53_record" "subdomain" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = "${var.subdomain_name}.${var.domain_name}"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.main.dns_name
+    zone_id                = aws_lb.main.zone_id
+    evaluate_target_health = true
   }
 }
 ```

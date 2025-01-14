@@ -32,3 +32,8 @@ output "alb_dns_name" {
   description = "The DNS name of the load balancer"
   value       = aws_lb.main.dns_name
 }
+
+output "app_url" {
+  description = "The URL of the application"
+  value       = "https://${var.subdomain_name}.${var.domain_name}"
+}
