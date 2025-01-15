@@ -47,6 +47,18 @@ aws dynamodb create-table \
    - This will update the ECS service to use the new Docker image.
    - **NOTE**: Had to add `--profile admin` to the command.
 
+### Other Commands
+
+`terraform fmt`: automatically updates configurations in the current directory for readability and consistency.
+
+`terraform validate`: checks the configuration files for syntax errors, formatting issues, and other potential problems.
+
+`terraform show`: displays the current state of the Terraform configuration.
+
+`terraform state list`: lists all resources managed by Terraform.
+
+`terraform destroy`: destroys the infrastructure created by Terraform.
+
 ## To Do
 
 - [ ] lock down ALB DNS Name URL ("hono-app-alb-351534744.us-east-1.elb.amazonaws.com") - should not be able to access the app via this URL (I think..?)
