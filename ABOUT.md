@@ -4,9 +4,7 @@
 
 **AWS ECS** is a container orchestration service that allows you to run and scale containerized applications on AWS. It provides a managed environment for running Docker containers and scaling your applications across multiple instances.
 
-**AWS Fargate** is a serverless compute engine that allows you to run containers without managing the underlying infrastructure. It provides a fully managed environment for running Docker containers and scaling your applications across multiple instances.
-
-This is a more cost-effective and scalable alternative to setting up and managing your own EC2 instances.
+**AWS Fargate** is a serverless compute engine that allows you to run containers without managing the underlying infrastructure. It provides a fully managed environment for running Docker containers and scaling your applications across multiple instances. This is a cost-effective and scalable alternative to setting up and managing your own EC2 instances.
 
 **AWS ECR** is a container registry service that allows you to store, manage, and deploy your Docker images on AWS. It provides a secure and scalable way to store and manage your Docker images.
 
