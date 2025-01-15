@@ -17,15 +17,15 @@ resource "aws_ecs_cluster" "main" {
 resource "aws_ecs_task_definition" "app" {
   family                   = var.app_name
   requires_compatibilities = ["FARGATE"]
-  network_mode            = "awsvpc"
-  cpu                     = var.ecs_task_cpu
-  memory                  = var.ecs_task_memory
-  execution_role_arn      = aws_iam_role.ecs_task_execution_role.arn
-  task_role_arn           = aws_iam_role.ecs_task_role.arn
+  network_mode             = "awsvpc"
+  cpu                      = var.ecs_task_cpu
+  memory                   = var.ecs_task_memory
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_task_role.arn
   depends_on = [
     aws_cloudwatch_log_group.ecs_logs
   ]
-  
+
   container_definitions = jsonencode([
     {
       name  = var.app_name
@@ -65,11 +65,11 @@ resource "aws_ecs_task_definition" "app" {
 }
 
 resource "aws_ecs_service" "app" {
-  name            = "${var.app_name}-service"
-  cluster         = aws_ecs_cluster.main.id
-  task_definition  = aws_ecs_task_definition.app.arn
-  desired_count   = var.ecs_task_desired_count
-  launch_type     = "FARGATE"
+  name                 = "${var.app_name}-service"
+  cluster              = aws_ecs_cluster.main.id
+  task_definition      = aws_ecs_task_definition.app.arn
+  desired_count        = var.ecs_task_desired_count
+  launch_type          = "FARGATE"
   force_new_deployment = true # force a new deployment if the task definition changes
 
   network_configuration {
@@ -78,7 +78,7 @@ resource "aws_ecs_service" "app" {
     assign_public_ip = true
   }
 
-   load_balancer {
+  load_balancer {
     target_group_arn = aws_lb_target_group.app.arn
     container_name   = var.app_name
     container_port   = var.container_port
@@ -87,7 +87,7 @@ resource "aws_ecs_service" "app" {
   depends_on = [aws_lb_listener.http]
 
   enable_ecs_managed_tags = true
-  propagate_tags         = "TASK_DEFINITION"  # or "SERVICE"
+  propagate_tags          = "TASK_DEFINITION" # or "SERVICE"
 
   tags = {
     Name        = "${var.app_name}-service"

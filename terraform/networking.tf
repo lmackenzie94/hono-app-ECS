@@ -56,8 +56,8 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public" {
-  count           = length(var.availability_zones)
-  subnet_id       = aws_subnet.public[count.index].id
+  count          = length(var.availability_zones)
+  subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
 
@@ -67,9 +67,9 @@ resource "aws_security_group" "ecs_tasks" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    protocol    = "tcp" 
-    from_port   = var.container_port
-    to_port     = var.container_port
+    protocol  = "tcp"
+    from_port = var.container_port
+    to_port   = var.container_port
     # cidr_blocks = ["0.0.0.0/0"]
     security_groups = [aws_security_group.alb.id] # Allow inbound traffic from the ALB
   }
@@ -78,7 +78,7 @@ resource "aws_security_group" "ecs_tasks" {
     protocol    = "-1" # all protocols
     from_port   = 0
     to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"] 
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
