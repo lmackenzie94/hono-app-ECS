@@ -27,7 +27,7 @@ terraform/
 ├── cloudwatch.tf
 ├── variables.tf
 ├── outputs.tf
-└── dev.auto.tfvars
+└── terraform.auto.tfvars
 ```
 
 **The infrastructure created includes:**
@@ -539,7 +539,7 @@ variable "environment" {
 # ... more variables
 ```
 
-The `dev.auto.tfvars` file contains the values for our variables:
+The `terraform.auto.tfvars` file contains the values for our variables:
 
 ```hcl
 app_name = "my-app"
