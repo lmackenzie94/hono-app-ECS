@@ -1,3 +1,7 @@
+# variables can also be set via CLI or in the HCP Terraform UI.
+# this file is ideal for non-sensitive, shared default values that are common across environments.
+# for secret/sensitive or environment-specific values, use HCP Terraform variables.
+
 aws_region             = "us-east-1"
 vpc_cidr               = "10.0.0.0/16"
 availability_zones     = ["us-east-1a", "us-east-1b"]

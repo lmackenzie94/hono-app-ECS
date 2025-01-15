@@ -68,7 +68,9 @@ aws dynamodb create-table \
    - you got these values from the AWS access console > lmack > AdministratorAccess
 5. `terraform plan`
 6. `terraform apply`
-7. View the run status in your `hono-app-ecs` [HCP Terraform workspace](https://app.terraform.io/app/lukes-org/workspaces/hono-app-ecs).
+7. Either:
+   - Review the plan in the console and type `yes` to apply it.
+   - Go to the URL outputted in the console, review the plan, and click "Confirm & apply".
 
 > There's also a **VCS(Version Control System)-based workflow** that is useful for teams. In short, PRs are created, reviewed, and merged in the same way as code.
 
