@@ -16,10 +16,9 @@ tfplan
 crash.log
 crash.*.log
 
-# Terraform variable files that may contain sensitive data
-*.tfvars
-*.tfvars.json
-!dev.tfvars
+# Terraform variable files (only need to exclude if they contain sensitive data)
+# *.tfvars
+# *.tfvars.json
 
 # Override files
 override.tf

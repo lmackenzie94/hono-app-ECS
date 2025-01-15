@@ -22,6 +22,8 @@ aws dynamodb create-table \
 
 ## Deploying to AWS ECS
 
+### Local
+
 1. `aws sso login --profile admin`
    - This will open a browser window to login to AWS.
 2. `terraform init` from the `terraform` directory
@@ -46,6 +48,29 @@ aws dynamodb create-table \
 9. `aws ecs update-service --cluster hono-app-cluster --service hono-app-service --force-new-deployment --profile admin --region us-east-1`
    - This will update the ECS service to use the new Docker image.
    - **NOTE**: Had to add `--profile admin` to the command.
+
+### HCP Terraform
+
+**[HCP Terraform](https://app.terraform.io/app/organizations)**:
+
+- is a Terraform cloud provider that manages runs in a consistent and reliable environment instead of on your local machine.
+- securely stores state and secret data, and can connect to version control systems so that you can develop your infrastructure using a workflow similar to application development.
+- has a private registry for sharing your organization's Terraform modules and providers.
+
+#### CLI-based workflow
+
+1. `terraform login`
+   - This will log you in to HCP Terraform.
+2. Configure `terraform.cloud {}` in the `provider.tf` file.
+3. `terraform init`
+   - This will initialize the Terraform project and create the workspace, if it doesn't already exist.
+4. `terraform plan -out=tfplan`
+   - This will show you the changes that will be made to your AWS resources.
+   - The `-out=tfplan` flag will save the plan to a file.
+5. `terraform apply tfplan`
+   - This will apply the changes to your AWS resources.
+
+> There's also a VCS(Version Control System)-based workflow that is useful for teams. In short, PRs are created, reviewed, and merged in the same way as code.
 
 ### Other Commands
 
