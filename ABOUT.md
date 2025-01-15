@@ -57,7 +57,6 @@ The `provider.tf` file configures the AWS provider with the specified region and
 ```hcl
 provider "aws" {
   region  = var.aws_region
-  profile = var.aws_profile
 }
 ```
 

@@ -49,9 +49,7 @@ aws dynamodb create-table \
    - This will update the ECS service to use the new Docker image.
    - **NOTE**: Had to add `--profile admin` to the command.
 
-### HCP Terraform
-
-**[HCP Terraform](https://app.terraform.io/app/organizations)**:
+### [HCP Terraform](https://app.terraform.io/app/organizations)
 
 - is a Terraform cloud provider that manages runs in a consistent and reliable environment instead of on your local machine.
 - securely stores state and secret data, and can connect to version control systems so that you can develop your infrastructure using a workflow similar to application development.
@@ -64,13 +62,15 @@ aws dynamodb create-table \
 2. Configure `terraform.cloud {}` in the `provider.tf` file.
 3. `terraform init`
    - This will initialize the Terraform project and create the workspace, if it doesn't already exist.
-4. `terraform plan -out=tfplan`
-   - This will show you the changes that will be made to your AWS resources.
-   - The `-out=tfplan` flag will save the plan to a file.
-5. `terraform apply tfplan`
-   - This will apply the changes to your AWS resources.
+   - Once this is done, you can delete any local `.tfstate`, `.tfstate.backup`, and `.tfplan` files (this is now stored in HCP Terraform).
+4. Authenticate to AWS
+   - in HCP Terraform, create a "Variable Set" with `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_SESSION_TOKEN`. Make sure t0 set them as "Environment" variables, not "Terraform" variables.
+   - you got these values from the AWS access console > lmack > AdministratorAccess
+5. `terraform plan`
+6. `terraform apply`
+7. View the run status in your `hono-app-ecs` [HCP Terraform workspace](https://app.terraform.io/app/lukes-org/workspaces/hono-app-ecs).
 
-> There's also a VCS(Version Control System)-based workflow that is useful for teams. In short, PRs are created, reviewed, and merged in the same way as code.
+> There's also a **VCS(Version Control System)-based workflow** that is useful for teams. In short, PRs are created, reviewed, and merged in the same way as code.
 
 ### Other Commands
 
