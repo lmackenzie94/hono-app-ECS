@@ -82,6 +82,12 @@ aws dynamodb create-table \
   - `terraform state mv aws_ecr_repository.app module.storage.aws_ecr_repository.app`
   - `terraform state mv aws_dynamodb_table.app_table module.storage.aws_dynamodb_table.app_table`
 
+### Destroying the app
+
+`terraform destroy`
+
+> Running `terraform apply` again will fail (not tested) because while the ECR repository will be recreated, it will not contain any images. Perhaps I should not manage the ECR repository with Terraform?
+
 ### Other Commands
 
 `terraform fmt`: automatically updates configurations in the current directory for readability and consistency.
@@ -92,7 +98,7 @@ aws dynamodb create-table \
 
 `terraform state list`: lists all resources managed by Terraform.
 
-`terraform destroy`: destroys the infrastructure created by Terraform.
+`terraform state mv <resource_name> <new_resource_name>`: moves a resource to a new name. Used to move resources between modules.
 
 ## To Do
 

@@ -5,7 +5,8 @@
 # --------------------------------------
 # Amazon Elastic Container Registry (ECR) configuration
 # Sets up the container registry where Docker images for the application will be stored.
-# This registry is used by ECS to pull the container images for deployment.
+# This registry is used by ECS to push the container images for deployment.
+# Also sets up a lifecycle policy to keep the last 3 images.
 # --------------------------------------
 resource "aws_ecr_repository" "app" {
   name = var.ecr_repository_name
@@ -17,6 +18,27 @@ resource "aws_ecr_repository" "app" {
 
   tags = merge(var.common_tags, {
     Name        = "${var.ecr_repository_name}-ecr"
+  })
+}
+
+resource "aws_ecr_lifecycle_policy" "policy" {
+  repository = var.ecr_repository_name
+
+  policy = jsonencode({
+    rules = [
+      {
+        rulePriority = 1
+        description  = "Keep last 3 images"
+        selection = {
+          tagStatus     = "any"
+          countType     = "imageCountMoreThan"
+          countNumber   = 3
+        }
+        action = {
+          type = "expire"
+        }
+      }
+    ]
   })
 }
 
