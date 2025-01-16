@@ -5,12 +5,6 @@
 # These variables can be set via terraform.tfvars or environment variables.
 # --------------------------------------
 
-variable "aws_region" {
-  description = "AWS region to deploy resources"
-  type        = string
-  default     = "us-east-1"
-}
-
 variable "num_availability_zones" {
   description = "Number of availability zones to create"
   type        = number
@@ -20,12 +14,15 @@ variable "num_availability_zones" {
     condition     = var.num_availability_zones >= 2 && var.num_availability_zones <= 3
     error_message = "Number of availability zones must be at least 2 and no more than 3."
   }
-
 }
 
 variable "app_name" {
   description = "Name of the application"
   type        = string
+  validation {
+    condition     = length(var.app_name) > 0
+    error_message = "Application name cannot be empty."
+  }
 }
 
 variable "environment" {

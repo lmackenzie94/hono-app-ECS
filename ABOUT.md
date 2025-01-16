@@ -56,7 +56,7 @@ The `provider.tf` file configures the AWS provider with the specified region and
 
 ```hcl
 provider "aws" {
-  region  = var.aws_region
+  region  = "us-east-1"
 }
 ```
 
@@ -317,14 +317,14 @@ resource "aws_ecs_task_definition" "app" {
         },
         {
           name  = "AWS_REGION"
-          value = var.aws_region
+          value = data.aws_region.current.name
         }
       ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = "/ecs/${var.app_name}"
-          "awslogs-region"        = var.aws_region
+          "awslogs-region"        = data.aws_region.current.name
           "awslogs-stream-prefix" = "ecs"
         }
       }
@@ -521,12 +521,6 @@ resource "aws_cloudwatch_log_group" "ecs_logs" {
 The `variables.tf` file defines all the configurable parameters and optionally sets default values:
 
 ```hcl
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
-  default     = "us-east-1"
-}
-
 variable "app_name" {
   description = "Application name"
   type        = string

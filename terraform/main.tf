@@ -1,7 +1,10 @@
-# --------------------------------------
-# AWS Availability Zones
-# Retrieves a list of available AWS availability zones for the current region.
-# --------------------------------------
+# DATA SOURCES
+# see the AWS provider documentation for all available "data sources"
+
+# retrieves the current AWS region (as specified in the provider.tf file)
+data "aws_region" "current" {}
+
+# retrieves a list of available AWS availability zones for the current region
 data "aws_availability_zones" "available" {
   state = "available"
 }

@@ -2,8 +2,7 @@
 # this file is ideal for non-sensitive, shared default values that are common across environments.
 # for secret/sensitive or environment-specific values, use HCP Terraform variables.
 
-aws_region = "us-east-1"
-vpc_cidr   = "10.0.0.0/16"
+vpc_cidr = "10.0.0.0/16"
 
 # NOTE: Application Load Balancers (ALB) require at least two Availability Zones
 num_availability_zones = 2

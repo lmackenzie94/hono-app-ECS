@@ -43,14 +43,14 @@ resource "aws_ecs_task_definition" "app" {
         },
         {
           name  = "AWS_REGION"
-          value = var.aws_region
+          value = data.aws_region.current.name
         }
       ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = "/ecs/${var.app_name}"
-          "awslogs-region"        = var.aws_region
+          "awslogs-region"        = data.aws_region.current.name
           "awslogs-stream-prefix" = "ecs"
         }
       }

@@ -47,8 +47,9 @@ resource "aws_internet_gateway" "main" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id # the VPC to attach the route table to
 
+  # send all internet-bound traffic through the internet gateway
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = "0.0.0.0/0" # all IPv4 traffic
     gateway_id = aws_internet_gateway.main.id
   }
 
@@ -59,6 +60,7 @@ resource "aws_route_table" "public" {
   }
 }
 
+# Associate the public route table with the public subnets
 resource "aws_route_table_association" "public" {
   count          = var.num_availability_zones
   subnet_id      = aws_subnet.public[count.index].id
@@ -107,10 +109,16 @@ resource "aws_security_group" "alb" {
 
   # allow inbound traffic on port 443
   ingress {
-    from_port   = 443
-    to_port     = 443
+    # NOTE: to open a single port (443), from_port and to_port must be the same:
+    from_port = 443
+    to_port   = 443
+
+    # to open a range of ports (443-445), use the following:
+    # from_port   = 443
+    # to_port     = 445
+
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] # allow traffic from anywhere
   }
 
   egress {
