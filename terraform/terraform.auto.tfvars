@@ -2,12 +2,11 @@
 # this file is ideal for non-sensitive, shared default values that are common across environments.
 # for secret/sensitive or environment-specific values, use HCP Terraform variables.
 
-aws_region             = "us-east-1"
-vpc_cidr               = "10.0.0.0/16"
+aws_region = "us-east-1"
+vpc_cidr   = "10.0.0.0/16"
 
 # NOTE: Application Load Balancers (ALB) require at least two Availability Zones
-availability_zones     = ["us-east-1a", "us-east-1b"]
-public_subnet_cidrs    = ["10.0.1.0/24", "10.0.2.0/24"]
+num_availability_zones = 2
 app_name               = "hono-app"
 environment            = "dev"
 container_port         = 3000

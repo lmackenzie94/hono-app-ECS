@@ -11,6 +11,18 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
+variable "num_availability_zones" {
+  description = "Number of availability zones to create"
+  type        = number
+  default     = 2
+
+  validation {
+    condition     = var.num_availability_zones >= 2 && var.num_availability_zones <= 3
+    error_message = "Number of availability zones must be at least 2 and no more than 3."
+  }
+
+}
+
 variable "app_name" {
   description = "Name of the application"
   type        = string
@@ -50,22 +62,10 @@ variable "logs_retention_days" {
   type        = number
 }
 
-variable "availability_zones" {
-  description = "Availability zones for subnets"
-  type        = list(string)
-  default     = ["us-east-1a", "us-east-1b"]
-}
-
 variable "vpc_cidr" {
   description = "CIDR block for VPC"
   type        = string
   default     = "10.0.0.0/16" # gives you 10.0.0.0 - 10.0.255.255 (65,536 IP addresses)
-}
-
-variable "public_subnet_cidrs" {
-  description = "CIDR blocks for public subnets"
-  type        = list(string)
-  default     = ["10.0.1.0/24", "10.0.2.0/24"] # gives you 10.0.1.0 - 10.0.1.255 and 10.0.2.0 - 10.0.2.255 (256 IP addresses each)
 }
 
 variable "domain_name" {
