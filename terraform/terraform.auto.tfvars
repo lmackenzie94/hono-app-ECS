@@ -12,6 +12,6 @@ container_port         = 3000
 ecs_task_cpu           = 256
 ecs_task_memory        = 512
 ecs_task_desired_count = 1
-logs_retention_days    = 5
+logs_retention_days    = 3
 domain_name            = "lukelearnsthe.cloud"
 subdomain_name         = "hono-ecs"

@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "app" {
   container_definitions = jsonencode([
     {
       name  = var.app_name
-      image = "${aws_ecr_repository.app.repository_url}:latest"
+      image = "${module.storage.ecr_repository_url}:latest" # should match the output name in the storage module
       portMappings = [
         {
           containerPort = var.container_port
@@ -39,7 +39,7 @@ resource "aws_ecs_task_definition" "app" {
       environment = [
         {
           name  = "DYNAMODB_TABLE_NAME"
-          value = aws_dynamodb_table.app_table.name
+          value = module.storage.dynamodb_table_name # should match the output name in the storage module
         },
         {
           name  = "AWS_REGION"

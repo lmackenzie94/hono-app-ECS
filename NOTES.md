@@ -76,6 +76,12 @@ aws dynamodb create-table \
 
 > There's also a **VCS(Version Control System)-based workflow** that is useful for teams. In short, PRs are created, reviewed, and merged in the same way as code.
 
+### Storage Module
+
+- after moving the ECR and DynamoDB resources to the storage module, I had make Terraform aware of the changes by running `terraform init` again. Additionally, I had to update the state to reflect the new resource addresses:
+  - `terraform state mv aws_ecr_repository.app module.storage.aws_ecr_repository.app`
+  - `terraform state mv aws_dynamodb_table.app_table module.storage.aws_dynamodb_table.app_table`
+
 ### Other Commands
 
 `terraform fmt`: automatically updates configurations in the current directory for readability and consistency.

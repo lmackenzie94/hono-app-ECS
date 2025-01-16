@@ -7,7 +7,7 @@
 # Terraform configuration 
 # Defines the required providers and their versions.
 # By default, Terraform installs providers from the [Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest).
-terraform {  
+terraform {
 
   # HCP Terraform (CLI-based workflow) configuration
   cloud {
@@ -27,5 +27,5 @@ terraform {
 
 # AWS Provider configuration
 provider "aws" {
-  region  = var.aws_region
+  region = var.aws_region
 }

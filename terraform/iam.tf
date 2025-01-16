@@ -72,7 +72,7 @@ resource "aws_iam_role_policy" "ecs_task_dynamodb" {
           # "dynamodb:Scan",
           # "dynamodb:Query"
         ]
-        Resource = aws_dynamodb_table.app_table.arn
+        Resource = module.storage.dynamodb_table_arn
       }
     ]
   })
