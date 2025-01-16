@@ -64,8 +64,10 @@ aws dynamodb create-table \
    - This will initialize the Terraform project and create the workspace, if it doesn't already exist.
    - Once this is done, you can delete any local `.tfstate`, `.tfstate.backup`, and `.tfplan` files (this is now stored in HCP Terraform).
 4. Authenticate to AWS
-   - in HCP Terraform, create a "Variable Set" with `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_SESSION_TOKEN`. Make sure t0 set them as "Environment" variables, not "Terraform" variables.
-   - you got these values from the AWS access console > lmack > AdministratorAccess
+   - in the AWS console, go to IAM > Users > Create user > `terraform-admin` > Attach policies directly > AdministratorAccess.
+     - ideally, you should follow the principle of least privilege and create a new policy with only the necessary permissions.
+   - go to the user > Create access key.
+   - in HCP Terraform, create a "Variable Set" with `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. Make sure to set them as "Environment" variables, not "Terraform" variables.
 5. `terraform plan`
 6. `terraform apply`
 7. Either:
