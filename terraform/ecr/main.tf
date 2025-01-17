@@ -1,7 +1,3 @@
-# STORAGE MODULE
-# - ECR
-# - DynamoDB
-
 # --------------------------------------
 # Amazon Elastic Container Registry (ECR) configuration
 # Sets up the container registry where Docker images for the application will be stored.
@@ -16,13 +12,13 @@ resource "aws_ecr_repository" "app" {
     scan_on_push = true
   }
 
-  tags = merge(var.common_tags, {
-    Name        = "${var.ecr_repository_name}-ecr"
-  })
+  tags = {
+    Name = "${var.ecr_repository_name}-ecr"
+  }
 }
 
 resource "aws_ecr_lifecycle_policy" "policy" {
-  repository = var.ecr_repository_name
+  repository = aws_ecr_repository.app.name
 
   policy = jsonencode({
     rules = [
@@ -30,9 +26,9 @@ resource "aws_ecr_lifecycle_policy" "policy" {
         rulePriority = 1
         description  = "Keep last 3 images"
         selection = {
-          tagStatus     = "any"
-          countType     = "imageCountMoreThan"
-          countNumber   = 3
+          tagStatus   = "any"
+          countType   = "imageCountMoreThan"
+          countNumber = 3
         }
         action = {
           type = "expire"
@@ -41,24 +37,3 @@ resource "aws_ecr_lifecycle_policy" "policy" {
     ]
   })
 }
-
-# --------------------------------------
-# Amazon DynamoDB configuration
-# Sets up the DynamoDB table used by the application for data storage.
-# Defines the table structure, capacity settings, and keys.
-# --------------------------------------
-resource "aws_dynamodb_table" "app_table" {
-  name         = var.dynamodb_table_name
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "id"
-
-  attribute {
-    name = "id"
-    type = "S"
-  }
-
-  tags = merge(var.common_tags, {
-    Name        = var.dynamodb_table_name
-  })
-}
-

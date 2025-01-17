@@ -2,12 +2,12 @@
 # this file is ideal for non-sensitive, shared default values that are common across environments.
 # for secret/sensitive or environment-specific values, use HCP Terraform variables.
 
-vpc_cidr = "10.0.0.0/16"
+app_name    = "hono-app-ecs"
+environment = "dev"
 
 # NOTE: Application Load Balancers (ALB) require at least two Availability Zones
 num_availability_zones = 2
-app_name               = "hono-app"
-environment            = "dev"
+vpc_cidr               = "10.0.0.0/16"
 container_port         = 3000
 ecs_task_cpu           = 256
 ecs_task_memory        = 512

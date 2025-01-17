@@ -1,5 +1,5 @@
 # --------------------------------------
-# Terraform configuration 
+# Terraform configuration for ECS
 # Defines the required providers and their versions.
 # By default, Terraform installs providers from the [Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest).
 # --------------------------------------

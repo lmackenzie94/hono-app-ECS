@@ -5,17 +5,6 @@
 # These variables can be set via terraform.tfvars or environment variables.
 # --------------------------------------
 
-variable "num_availability_zones" {
-  description = "Number of availability zones to create"
-  type        = number
-  default     = 2
-
-  validation {
-    condition     = var.num_availability_zones >= 2 && var.num_availability_zones <= 3
-    error_message = "Number of availability zones must be at least 2 and no more than 3."
-  }
-}
-
 variable "app_name" {
   description = "Name of the application"
   type        = string
@@ -31,6 +20,17 @@ variable "environment" {
   validation {
     condition     = contains(["dev", "prod"], var.environment)
     error_message = "Environment must be either 'dev' or 'prod'."
+  }
+}
+
+variable "num_availability_zones" {
+  description = "Number of availability zones to create"
+  type        = number
+  default     = 2
+
+  validation {
+    condition     = var.num_availability_zones >= 2 && var.num_availability_zones <= 3
+    error_message = "Number of availability zones must be at least 2 and no more than 3."
   }
 }
 

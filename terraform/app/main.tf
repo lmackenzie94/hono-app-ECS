@@ -9,11 +9,15 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
-# ECR + DynamoDB
+# retrieves the "hono-app" ECR repository
+data "aws_ecr_repository" "app" {
+  name = "hono-app"
+}
+
+# DynamoDB
 module "storage" {
   source = "./modules/storage"
 
   dynamodb_table_name = "${var.app_name}-table"
-  ecr_repository_name = var.app_name
   common_tags         = local.common_tags
 }

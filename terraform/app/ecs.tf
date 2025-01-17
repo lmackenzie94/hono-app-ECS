@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "app" {
   container_definitions = jsonencode([
     {
       name  = var.app_name
-      image = "${module.storage.ecr_repository_url}:latest" # should match the output name in the storage module
+      image = "${data.aws_ecr_repository.app.repository_url}:latest" # should match the output name in the storage module
       portMappings = [
         {
           containerPort = var.container_port

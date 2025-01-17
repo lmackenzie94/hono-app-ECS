@@ -11,7 +11,6 @@ locals {
   # ** usage example: dynamodb_table_name = local.resource_names.dynamodb
   # resource_names = {
   #   dynamodb = "${var.app_name}-table"
-  #   ecr      = "${var.app_name}"
   #   # etc...
   # }
 }
