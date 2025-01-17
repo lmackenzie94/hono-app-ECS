@@ -7,20 +7,20 @@
 terraform {
   # ensures that the Terraform "core" version is at least 1.10 and allows for minor version updates
   # tilde (~) allows the right-most version number to increment
-  required_version = "~> 1.10" 
+  required_version = "~> 1.10"
 
   # HCP Terraform (CLI-based workflow) configuration
   cloud {
     organization = "lukes-org"
     workspaces {
-      name = "hono-app-ecs"
+      name = "hono-app-ecs" # NOTE: can't use var.app_name here (because it's not available at this point... I think?)
     }
   }
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0" 
+      version = "~> 5.0"
     }
   }
 }

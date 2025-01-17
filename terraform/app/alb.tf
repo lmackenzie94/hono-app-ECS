@@ -15,7 +15,6 @@ resource "aws_lb" "main" {
   tags = {
     Name        = "${var.app_name}-alb"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 
@@ -41,7 +40,6 @@ resource "aws_lb_target_group" "app" {
   tags = {
     Name        = "${var.app_name}-tg"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 

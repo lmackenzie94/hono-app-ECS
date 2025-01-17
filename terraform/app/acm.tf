@@ -17,7 +17,6 @@ resource "aws_acm_certificate" "cert" {
   tags = {
     Name        = "${var.app_name}-cert"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 

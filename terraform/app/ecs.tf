@@ -10,7 +10,6 @@ resource "aws_ecs_cluster" "main" {
   tags = {
     Name        = "${var.app_name}-cluster"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 
@@ -60,7 +59,6 @@ resource "aws_ecs_task_definition" "app" {
   tags = {
     Name        = "${var.app_name}-task-definition"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 
@@ -92,6 +90,5 @@ resource "aws_ecs_service" "app" {
   tags = {
     Name        = "${var.app_name}-service"
     Environment = var.environment
-    Application = var.app_name
   }
 }

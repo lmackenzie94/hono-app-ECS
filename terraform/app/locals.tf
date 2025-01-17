@@ -3,7 +3,7 @@ locals {
   # Common Tags
   # --------------------------------------
   common_tags = {
-    Application = var.app_name
+    # Application = var.app_name # moved to AWS provider "default_tags"
     Environment = var.environment
   }
 

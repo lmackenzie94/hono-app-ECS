@@ -23,7 +23,6 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   tags = {
     Name        = "${var.app_name}-execution-role"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 
@@ -51,7 +50,6 @@ resource "aws_iam_role" "ecs_task_role" {
   tags = {
     Name        = "${var.app_name}-task-role"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 

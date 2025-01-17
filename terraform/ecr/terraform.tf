@@ -7,7 +7,7 @@
 terraform {
   # ensures that the Terraform "core" version is at least 1.10 and allows for minor version updates
   # tilde (~) allows the right-most version number to increment
-  required_version = "~> 1.10" 
+  required_version = "~> 1.10"
 
   # HCP Terraform (CLI-based workflow) configuration
   cloud {
@@ -20,7 +20,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0" 
+      version = "~> 5.0"
     }
   }
 }

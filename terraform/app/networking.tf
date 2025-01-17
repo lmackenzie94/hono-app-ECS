@@ -12,7 +12,6 @@ resource "aws_vpc" "main" {
   tags = {
     Name        = "${var.app_name}-vpc"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 
@@ -28,7 +27,6 @@ resource "aws_subnet" "public" {
   tags = {
     Name        = "${var.app_name}-public-${count.index}"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 
@@ -40,7 +38,6 @@ resource "aws_internet_gateway" "main" {
   tags = {
     Name        = "${var.app_name}-igw"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 
@@ -56,7 +53,6 @@ resource "aws_route_table" "public" {
   tags = {
     Name        = "${var.app_name}-public-rt"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 
@@ -90,7 +86,6 @@ resource "aws_security_group" "ecs_tasks" {
   tags = {
     Name        = "${var.app_name}-sg"
     Environment = var.environment
-    Application = var.app_name
   }
 }
 
@@ -99,7 +94,7 @@ resource "aws_security_group" "alb" {
   description = "Security group for Application Load Balancer"
   vpc_id      = aws_vpc.main.id
 
-  # allow inbound traffic on port 80, which will be redirected to port 443
+  # allow inbound traffic on port 80, which will be redirected to port 443 by the ALB HTTP Listener
   ingress {
     from_port   = 80
     to_port     = 80
@@ -107,7 +102,7 @@ resource "aws_security_group" "alb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # allow inbound traffic on port 443
+  # allow inbound traffic on port 443, which will be forwarded to the target group by the ALB HTTPS Listener
   ingress {
     # NOTE: to open a single port (443), from_port and to_port must be the same:
     from_port = 443
@@ -131,6 +126,5 @@ resource "aws_security_group" "alb" {
   tags = {
     Name        = "${var.app_name}-alb-sg"
     Environment = var.environment
-    Application = var.app_name
   }
 }

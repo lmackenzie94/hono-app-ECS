@@ -27,12 +27,14 @@ aws dynamodb create-table \
 1. `aws sso login --profile admin`
    - This will open a browser window to login to AWS.
 2. `terraform init` from the `terraform` directory
-   - This will create a `.terraform` directory and download the necessary providers.
+   - This will initialize the Terraform project and create the workspace, if it doesn't already exist.
+   - Will create a `.terraform` directory and download the necessary providers.
 3. `terraform plan -out=tfplan`
    - This will show you the changes that will be made to your AWS resources.
    - The `-out=tfplan` flag will save the plan to a file.
 4. `terraform apply tfplan`
    - If running for the first time, this will create the necessary AWS resources.
+     - **NOTE**: the ALB takes a few minutes to be created... be patient.
    - If running again, this will update the existing resources.
 5. Go to ECR in the AWS console and find the repository you created > `View push commands`
    - This will show you the commands you need to run to push your Docker image to the ECR repository.
@@ -61,7 +63,6 @@ aws dynamodb create-table \
    - This will log you in to HCP Terraform.
 2. Configure `terraform.cloud {}` in the `terraform.tf` file.
 3. `terraform init`
-   - This will initialize the Terraform project and create the workspace, if it doesn't already exist.
    - Once this is done, you can delete any local `.tfstate`, `.tfstate.backup`, and `.tfplan` files (this is now stored in HCP Terraform).
 4. Authenticate to AWS
    - in the AWS console, go to IAM > Users > Create user > `terraform-admin` > Attach policies directly > AdministratorAccess.
@@ -85,8 +86,6 @@ aws dynamodb create-table \
 ### Destroying the app
 
 `terraform destroy`
-
-> Running `terraform apply` again will fail (not tested) because while the ECR repository will be recreated, it will not contain any images. Perhaps I should not manage the ECR repository with Terraform?
 
 ### Other Commands
 

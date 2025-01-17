@@ -6,4 +6,9 @@
 
 provider "aws" {
   region = "us-east-1"
+  default_tags {
+    tags = {
+      Application = "hono-app-ecs" # associates the ECR repository with the application
+    }
+  }
 }
