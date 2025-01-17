@@ -8,7 +8,7 @@ provider "aws" {
   region = "us-east-1"
   default_tags {
     tags = {
-      Application = "hono-app-ecs"
+      Application = var.app_name
     }
   }
 }
