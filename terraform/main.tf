@@ -1,7 +1,7 @@
 # DATA SOURCES
 # see the AWS provider documentation for all available "data sources"
 
-# retrieves the current AWS region (as specified in the provider.tf file)
+# retrieves the current AWS region (as specified in the providers.tf file)
 data "aws_region" "current" {}
 
 # retrieves a list of available AWS availability zones for the current region

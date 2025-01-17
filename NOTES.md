@@ -59,7 +59,7 @@ aws dynamodb create-table \
 
 1. `terraform login`
    - This will log you in to HCP Terraform.
-2. Configure `terraform.cloud {}` in the `provider.tf` file.
+2. Configure `terraform.cloud {}` in the `terraform.tf` file.
 3. `terraform init`
    - This will initialize the Terraform project and create the workspace, if it doesn't already exist.
    - Once this is done, you can delete any local `.tfstate`, `.tfstate.backup`, and `.tfplan` files (this is now stored in HCP Terraform).

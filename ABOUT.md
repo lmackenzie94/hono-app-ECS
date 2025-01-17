@@ -16,7 +16,7 @@ Our Terraform configuration is organized into several files, each handling speci
 
 ```
 terraform/
-├── provider.tf
+├── providers.tf
 ├── networking.tf
 ├── iam.tf
 ├── ecr.tf
@@ -52,7 +52,7 @@ terraform/
 
 ## Provider
 
-The `provider.tf` file configures the AWS provider with the specified region and profile.
+The `providers.tf` file configures the AWS provider with the specified region.
 
 ```hcl
 provider "aws" {
