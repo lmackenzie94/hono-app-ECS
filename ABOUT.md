@@ -526,11 +526,6 @@ variable "app_name" {
   type        = string
 }
 
-variable "environment" {
-  description = "Environment name"
-  type        = string
-}
-
 # ... more variables
 ```
 

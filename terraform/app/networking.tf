@@ -10,8 +10,7 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
 
   tags = {
-    Name        = "${var.app_name}-vpc"
-    Environment = var.environment
+    Name = "${var.app_name}-vpc"
   }
 }
 
@@ -25,8 +24,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name        = "${var.app_name}-public-${count.index}"
-    Environment = var.environment
+    Name = "${var.app_name}-public-${count.index}"
   }
 }
 
@@ -36,8 +34,7 @@ resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id # the VPC to attach the Internet Gateway to
 
   tags = {
-    Name        = "${var.app_name}-igw"
-    Environment = var.environment
+    Name = "${var.app_name}-igw"
   }
 }
 
@@ -51,8 +48,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name        = "${var.app_name}-public-rt"
-    Environment = var.environment
+    Name = "${var.app_name}-public-rt"
   }
 }
 
@@ -84,8 +80,7 @@ resource "aws_security_group" "ecs_tasks" {
   }
 
   tags = {
-    Name        = "${var.app_name}-sg"
-    Environment = var.environment
+    Name = "${var.app_name}-sg"
   }
 }
 
@@ -124,7 +119,6 @@ resource "aws_security_group" "alb" {
   }
 
   tags = {
-    Name        = "${var.app_name}-alb-sg"
-    Environment = var.environment
+    Name = "${var.app_name}-alb-sg"
   }
 }

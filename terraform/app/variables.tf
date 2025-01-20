@@ -14,15 +14,6 @@ variable "app_name" {
   }
 }
 
-variable "environment" {
-  description = "Environment (dev, prod, etc.)"
-  type        = string
-  validation {
-    condition     = contains(["dev", "prod"], var.environment)
-    error_message = "Environment must be either 'dev' or 'prod'."
-  }
-}
-
 variable "num_availability_zones" {
   description = "Number of availability zones to create"
   type        = number

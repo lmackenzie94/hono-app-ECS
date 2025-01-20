@@ -9,7 +9,6 @@ resource "aws_cloudwatch_log_group" "ecs_logs" {
   retention_in_days = var.logs_retention_days
 
   tags = {
-    Name        = "${var.app_name}-logs"
-    Environment = var.environment
+    Name = "${var.app_name}-logs"
   }
 }

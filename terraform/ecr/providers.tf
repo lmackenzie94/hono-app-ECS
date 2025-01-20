@@ -9,6 +9,7 @@ provider "aws" {
   default_tags {
     tags = {
       Application = "hono-app-ecs" # associates the ECR repository with the application
+      Environment = terraform.workspace
     }
   }
 }

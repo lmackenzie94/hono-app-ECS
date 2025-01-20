@@ -42,20 +42,20 @@ aws dynamodb create-table \
    - **NOTE**: had to add `--profile admin` to the `aws ecr get-login-password` command. Was getting an error without it.
 6. `docker build --platform linux/amd64 -t hono-app .`
    - This will build the Docker image.
-   - **NOTE**: Need to explicitly build for linux/amd64 platform
+   - **NOTE**: need to explicitly build for linux/amd64 platform
 7. `docker tag hono-app:latest 021891593951.dkr.ecr.us-east-1.amazonaws.com/hono-app:latest`
    - This will tag the Docker image.
 8. `docker push 021891593951.dkr.ecr.us-east-1.amazonaws.com/hono-app:latest`
    - This will push the Docker image to the ECR repository.
 9. `aws ecs update-service --cluster hono-app-cluster --service hono-app-service --force-new-deployment --profile admin --region us-east-1`
    - This will update the ECS service to use the new Docker image.
-   - **NOTE**: Had to add `--profile admin` to the command.
+   - **NOTE**: had to add `--profile admin` to the command.
 
 ### [HCP Terraform](https://app.terraform.io/app/organizations)
 
-- is a Terraform cloud provider that manages runs in a consistent and reliable environment instead of on your local machine.
-- securely stores state and secret data, and can connect to version control systems so that you can develop your infrastructure using a workflow similar to application development.
-- has a private registry for sharing your organization's Terraform modules and providers.
+- Is a Terraform cloud provider that manages runs in a consistent and reliable environment instead of on your local machine.
+- Securely stores state and secret data, and can connect to version control systems so that you can develop your infrastructure using a workflow similar to application development.
+- Has a private registry for sharing your organization's Terraform modules and providers.
 
 #### CLI-based workflow
 
@@ -65,10 +65,10 @@ aws dynamodb create-table \
 3. `terraform init`
    - Once this is done, you can delete any local `.tfstate`, `.tfstate.backup`, and `.tfplan` files (this is now stored in HCP Terraform).
 4. Authenticate to AWS
-   - in the AWS console, go to IAM > Users > Create user > `terraform-admin` > Attach policies directly > AdministratorAccess.
-     - ideally, you should follow the principle of least privilege and create a new policy with only the necessary permissions.
-   - go to the user > Create access key.
-   - in HCP Terraform, create a "Variable Set" with `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. Make sure to set them as "Environment" variables, not "Terraform" variables.
+   - In the AWS console, go to IAM > Users > Create user > `terraform-admin` > Attach policies directly > AdministratorAccess.
+     - Ideally, you should follow the principle of least privilege and create a new policy with only the necessary permissions.
+   - Go to the user > Create access key.
+   - In HCP Terraform, create a "Variable Set" with `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. Make sure to set them as "Environment" variables, not "Terraform" variables.
 5. `terraform plan`
 6. `terraform apply`
 7. Either:
@@ -79,9 +79,21 @@ aws dynamodb create-table \
 
 ### Storage Module
 
-- after moving the ECR and DynamoDB resources to the storage module, I had make Terraform aware of the changes by running `terraform init` again. Additionally, I had to update the state to reflect the new resource addresses:
-  - `terraform state mv aws_ecr_repository.app module.storage.aws_ecr_repository.app`
+- After moving DynamoDB resources to the storage module, I had to make Terraform aware of the changes by running `terraform init` again. Additionally, I had to update the state to reflect the new resource addresses:
   - `terraform state mv aws_dynamodb_table.app_table module.storage.aws_dynamodb_table.app_table`
+
+### ECR Module
+
+- I decided to break out the ECR repository into its own "root" module so that I could manage it separately from the rest of the application.
+  - This allows me to destroy/recreate the "app" resources without affecting the ECR repository and (more importantly) the image(s) in it.
+  - Had I not done this, destroying then recreating the app would initially fail because the ECR repository would not contain the image that the app needs.
+
+### `Development` Workspace
+
+- Created a new `development` workspace to deploy the app to a different AWS region (`us-east-2`).
+  - `terraform workspace new development` (returned `workspaces not supported` error)
+    - **NOTE**: workspaces are managed differently when using HCP Terraform.
+  - run `terraform workspace select default` to go back to the default workspace.
 
 ### Destroying the app
 

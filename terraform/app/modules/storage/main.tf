@@ -16,7 +16,7 @@ resource "aws_dynamodb_table" "app_table" {
   }
 
   tags = merge(var.common_tags, {
-    Name        = var.dynamodb_table_name
+    Name = var.dynamodb_table_name
   })
 }
 

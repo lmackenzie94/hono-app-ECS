@@ -22,3 +22,15 @@ output "app_url" {
   description = "The URL of the application"
   value       = "https://${var.subdomain_name}.${var.domain_name}"
 }
+
+# DynamoDB outputs (from storage module)
+# These only work because I've added them as outputs in the storage module (see `modules/storage/outputs.tf`)
+output "dynamodb_table_name" {
+  description = "The name of the DynamoDB table"
+  value       = module.storage.dynamodb_table_name
+}
+
+output "dynamodb_table_arn" {
+  description = "The ARN of the DynamoDB table"
+  value       = module.storage.dynamodb_table_arn
+}

@@ -8,8 +8,7 @@ resource "aws_ecs_cluster" "main" {
   name = "${var.app_name}-cluster"
 
   tags = {
-    Name        = "${var.app_name}-cluster"
-    Environment = var.environment
+    Name = "${var.app_name}-cluster"
   }
 }
 
@@ -57,8 +56,7 @@ resource "aws_ecs_task_definition" "app" {
   ])
 
   tags = {
-    Name        = "${var.app_name}-task-definition"
-    Environment = var.environment
+    Name = "${var.app_name}-task-definition"
   }
 }
 
@@ -88,7 +86,6 @@ resource "aws_ecs_service" "app" {
   propagate_tags          = "TASK_DEFINITION" # or "SERVICE"
 
   tags = {
-    Name        = "${var.app_name}-service"
-    Environment = var.environment
+    Name = "${var.app_name}-service"
   }
 }

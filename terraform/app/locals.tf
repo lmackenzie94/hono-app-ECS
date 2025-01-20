@@ -4,7 +4,6 @@ locals {
   # --------------------------------------
   common_tags = {
     # Application = var.app_name # moved to AWS provider "default_tags"
-    Environment = var.environment
   }
 
   # ** could do this but it's not necessary

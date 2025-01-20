@@ -13,8 +13,7 @@ resource "aws_lb" "main" {
   enable_deletion_protection = false
 
   tags = {
-    Name        = "${var.app_name}-alb"
-    Environment = var.environment
+    Name = "${var.app_name}-alb"
   }
 }
 
@@ -38,8 +37,7 @@ resource "aws_lb_target_group" "app" {
   }
 
   tags = {
-    Name        = "${var.app_name}-tg"
-    Environment = var.environment
+    Name = "${var.app_name}-tg"
   }
 }
 
