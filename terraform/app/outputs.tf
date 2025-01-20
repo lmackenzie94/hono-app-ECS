@@ -5,12 +5,12 @@ output "ecs_cluster_name" {
 
 output "vpc_id" {
   description = "The ID of the VPC"
-  value       = aws_vpc.main.id
+  value       = module.vpc.vpc_id
 }
 
 output "public_subnet_ids" {
   description = "The IDs of the public subnets"
-  value       = aws_subnet.public[*].id
+  value       = module.vpc.public_subnets
 }
 
 output "alb_dns_name" {

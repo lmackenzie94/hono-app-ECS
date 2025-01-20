@@ -120,3 +120,5 @@ aws dynamodb create-table \
 - [ ] Auto-scaling - spin up task/instance on request instead of having one always running (to save money). Downside: cold start time.
 - [x] Try using one (or more) of the [AWS modules from the Terraform registry](https://registry.terraform.io/browse/modules?provider=aws)
   - used the `cloudwatch` module to create the log group
+  - used the `vpc` module to create the VPC, subnets, etc.
+  - used the `security-group` module to create the security groups

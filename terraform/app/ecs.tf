@@ -69,8 +69,8 @@ resource "aws_ecs_service" "app" {
   force_new_deployment = true # force a new deployment if the task definition changes
 
   network_configuration {
-    subnets          = aws_subnet.public[*].id
-    security_groups  = [aws_security_group.ecs_tasks.id]
+    subnets          = module.vpc.public_subnets
+    security_groups  = [module.ecs_tasks_sg.security_group_id]
     assign_public_ip = true
   }
 

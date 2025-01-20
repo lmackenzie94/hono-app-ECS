@@ -7,8 +7,8 @@ resource "aws_lb" "main" {
   name               = "${var.app_name}-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb.id]
-  subnets            = aws_subnet.public[*].id
+  security_groups    = [module.alb_sg.security_group_id]
+  subnets            = module.vpc.public_subnets
 
   enable_deletion_protection = false
 
@@ -21,7 +21,7 @@ resource "aws_lb_target_group" "app" {
   name        = "${var.app_name}-tg"
   port        = var.container_port
   protocol    = "HTTP"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = module.vpc.vpc_id
   target_type = "ip"
 
   health_check {
