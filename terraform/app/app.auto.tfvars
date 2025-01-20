@@ -2,8 +2,7 @@
 # this file is ideal for non-sensitive, shared default values that are common across environments.
 # for secret/sensitive or environment-specific values, use HCP Terraform variables.
 
-app_name    = "hono-app-ecs"
-environment = "dev"
+app_name = "hono-app-ecs"
 
 # NOTE: Application Load Balancers (ALB) require at least two Availability Zones
 num_availability_zones = 2

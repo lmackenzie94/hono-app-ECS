@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "app" {
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   depends_on = [
-    aws_cloudwatch_log_group.ecs_logs
+    module.ecs_logs
   ]
 
   container_definitions = jsonencode([

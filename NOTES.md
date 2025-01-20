@@ -116,5 +116,7 @@ aws dynamodb create-table \
 - [ ] lock down ALB DNS Name URL ("hono-app-alb-351534744.us-east-1.elb.amazonaws.com") - should not be able to access the app via this URL (I think..?)
 - [ ] set up CI/CD pipeline to build the Docker image and push it to ECR
 - [ ] Auto re-deploy ECS service when the Docker image is updated in ECR
-- [ ] Try destroying and recreating the app from scratch
+- [x] Try destroying and recreating the app from scratch
 - [ ] Auto-scaling - spin up task/instance on request instead of having one always running (to save money). Downside: cold start time.
+- [x] Try using one (or more) of the [AWS modules from the Terraform registry](https://registry.terraform.io/browse/modules?provider=aws)
+  - used the `cloudwatch` module to create the log group

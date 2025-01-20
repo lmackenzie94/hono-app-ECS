@@ -34,3 +34,10 @@ output "dynamodb_table_arn" {
   description = "The ARN of the DynamoDB table"
   value       = module.storage.dynamodb_table_arn
 }
+
+# CloudWatch outputs (from Cloudwatch/log-group module)
+# https://registry.terraform.io/modules/terraform-aws-modules/cloudwatch/aws/latest/submodules/log-group?tab=outputs
+output "cloudwatch_log_group_name" {
+  description = "The name of the CloudWatch log group"
+  value       = module.ecs_logs.cloudwatch_log_group_name
+}

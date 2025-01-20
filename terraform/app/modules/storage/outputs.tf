@@ -1,5 +1,5 @@
 # This file defines the outputs for the storage module
-# i.e. what values the module can expose to its parent module.
+# i.e. what values the module can expose/return to its parent module.
 # Think of it like the module's API.
 
 output "dynamodb_table_name" {
