@@ -17,6 +17,12 @@ terraform {
     }
   }
 
+  # Local backend configuration (optional b/c Terraform uses "local" backend by default)
+  # Not needed b/c we're using HCP Terraform
+  # backend "local" {
+  #   path = "terraform.tfstate" # this is the default path
+  # }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
