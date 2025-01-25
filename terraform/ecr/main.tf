@@ -1,7 +1,6 @@
 # --------------------------------------
 # Amazon Elastic Container Registry (ECR) configuration
 # Sets up the container registry where Docker images for the application will be stored.
-# This registry is used by ECS to push the container images for deployment.
 # Also sets up a lifecycle policy to keep the last 3 images.
 # --------------------------------------
 resource "aws_ecr_repository" "app" {

@@ -122,3 +122,4 @@ aws dynamodb create-table \
   - used the `cloudwatch` module to create the log group
   - used the `vpc` module to create the VPC, subnets, etc.
   - used the `security-group` module to create the security groups
+- [ ] Deploy and run `terraform graph`

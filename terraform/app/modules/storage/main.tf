@@ -1,5 +1,3 @@
-# STORAGE MODULE
-
 # --------------------------------------
 # Amazon DynamoDB configuration
 # Sets up the DynamoDB table used by the application for data storage.
