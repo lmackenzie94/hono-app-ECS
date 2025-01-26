@@ -5,7 +5,10 @@
   "description": "Simple Hono counter app with AWS DynamoDB",
   "main": "index.mjs",
   "scripts": {
-    "start": "node index.mjs"
+    "start": "node index.mjs",
+    "docs:app": "terraform-docs markdown table --output-file README.md --output-mode inject ./terraform/app",
+    "docs:ecr": "terraform-docs markdown table --output-file README.md --output-mode inject ./terraform/ecr",
+    "docs": "npm run docs:app && npm run docs:ecr"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.0.0",
