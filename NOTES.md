@@ -111,6 +111,10 @@ aws dynamodb create-table \
 
 `terraform state mv <resource_name> <new_resource_name>`: moves a resource to a new name. Used to move resources between modules.
 
+### Auto-Generating Docs
+
+`terraform-docs markdown table --output-file README.md --output-mode inject /path/to/module`
+
 ## To Do
 
 - [ ] lock down ALB DNS Name URL ("hono-app-alb-351534744.us-east-1.elb.amazonaws.com") - should not be able to access the app via this URL (I think..?)
