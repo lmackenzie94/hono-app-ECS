@@ -8,7 +8,11 @@
     "start": "node index.mjs",
     "docs:app": "terraform-docs markdown table --output-file README.md --output-mode inject ./terraform/app",
     "docs:ecr": "terraform-docs markdown table --output-file README.md --output-mode inject ./terraform/ecr",
-    "docs": "npm run docs:app && npm run docs:ecr"
+    "docs": "npm run docs:app && npm run docs:ecr",
+    "tfsort:variables": "tfsort ./terraform/app/variables.tf && tfsort ./terraform/ecr/variables.tf",
+    "tfsort:outputs": "tfsort ./terraform/app/outputs.tf && tfsort ./terraform/ecr/outputs.tf",
+    "tfsort": "npm run tfsort:variables && npm run tfsort:outputs",
+    "tflint": "tflint --recursive"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.0.0",
