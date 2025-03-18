@@ -55,7 +55,7 @@ resource "aws_iam_role_policy" "github_actions" {
           "ecs:DescribeServices",
           "ecs:UpdateService"
         ]
-        Resource = "arn:aws:ecs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:service/hono-app-cluster/hono-app-service"
+        Resource = "arn:aws:ecs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:service/hono-app-ecs-cluster/hono-app-ecs-service"
       }
     ]
   })

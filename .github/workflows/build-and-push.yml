@@ -47,6 +47,6 @@ jobs:
       - name: Deploy to Amazon ECS
         run: |
           aws ecs update-service \
-          --cluster hono-app-cluster \
-          --service hono-app-service \
+          --cluster hono-app-ecs-cluster \
+          --service hono-app-ecs-service \
           --force-new-deployment
