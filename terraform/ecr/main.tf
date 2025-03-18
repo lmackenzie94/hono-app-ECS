@@ -3,6 +3,11 @@
 # Sets up the container registry where Docker images for the application will be stored.
 # Also sets up a lifecycle policy to keep the last 3 images.
 # --------------------------------------
+# retrieves the current AWS region (as specified in the providers.tf file)
+data "aws_region" "current" {}
+
+data "aws_caller_identity" "current" {}
+
 resource "aws_ecr_repository" "app" {
   name = var.ecr_repository_name
 

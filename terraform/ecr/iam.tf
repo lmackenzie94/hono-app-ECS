@@ -49,25 +49,14 @@ resource "aws_iam_role_policy" "github_actions" {
         ]
         Resource = aws_ecr_repository.app.arn
       },
-      # TODO: Trigger ECS service deployment
-      # {
-      #   Effect = "Allow"
-      #   Action = [
-      #     "ecs:DescribeServices",
-      #     "ecs:UpdateService"
-      #   ]
-      #   Resource = "arn:aws:ecs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:service/${aws_ecs_cluster.app.name}/*"
-      # },
-      # {
-      #   Effect = "Allow"
-      #   Action = [
-      #     "ecs:DescribeTaskDefinition",
-      #     "ecs:RegisterTaskDefinition"
-      #   ]
-      #   Resource = "*"
-      # }
+      {
+        Effect = "Allow"
+        Action = [
+          "ecs:DescribeServices",
+          "ecs:UpdateService"
+        ]
+        Resource = "arn:aws:ecs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:service/hono-app-cluster/hono-app-service"
+      }
     ]
   })
 }
-
-data "aws_caller_identity" "current" {}
