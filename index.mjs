@@ -67,14 +67,20 @@ app.get('/', async c => {
             padding-bottom: 2rem;
             border-bottom: 1px solid #ccc;
           }
+          #count {
+            background-color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+          }
           p {
             font-size: 1.1rem;
+            line-height: 1.5;
           }
           button {
             display: block;
             font-size: 1.5rem;
             padding: 0.5rem 1rem;
-            background-color: #007bff;
+            background-color:rgb(0, 96, 198);
             color: #fff;
             border: none;
             border-radius: 0.25rem;
@@ -83,13 +89,16 @@ app.get('/', async c => {
             margin: 0rem auto;
           }
           button:hover {
-            background-color: #0069d9;
+            background-color: rgb(0, 86, 178);
+          }
+          form {
+            margin-top: 2rem;
           }
         </style>
         </head>
         <body>
           <header>
-            <h1>Current Views: ${count}</h1>
+            <h1>Current Views: <span id="count">${count}</span></h1>
           </header>
           <main>
            <p>
