@@ -1,8 +1,6 @@
 # [Hono Counter App with AWS ECS](https://hono-ecs.lukelearnsthe.cloud)
 
-_A simple Hono Node.js application that implements a view counter using AWS DynamoDB and is deployed on AWS ECS Fargate._
-
-⚠️ **Currently not deployed (to save money)** ⚠️
+_A simple Hono Node.js application that implements a view counter using AWS DynamoDB. Deployed on AWS ECS Fargate._
 
 ---
 
