@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>View Counter</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>Current Views: <span id="count">{{count}}</span></h1>
+  </header>
+  <main>
+    <p>
+      This is a simple <strong>Hono</strong> Node.js application that implements a view counter using <strong>AWS DynamoDB</strong> and is deployed on <strong>AWS ECS Fargate</strong>. The infrastructure is managed using <strong>Terraform</strong>, which (among other things) provisions an <strong>Application Load Balancer</strong> to distribute traffic across multiple container instances. The application's <strong>Docker image</strong> is stored in <strong>Amazon Elastic Container Registry (ECR)</strong>.
+    </p>
+    <form action="/increment" method="post">
+      <button type="submit">Add a view 👀</button>
+    </form>
+  </main>
+</body>
+
+</html>

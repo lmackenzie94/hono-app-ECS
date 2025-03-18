@@ -3,9 +3,10 @@ FROM node:18-slim
 WORKDIR /app
 
 COPY package*.json ./
-COPY index.mjs ./
 
 RUN npm install
+
+COPY src/ ./
 
 EXPOSE 3000
 
