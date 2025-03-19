@@ -7,7 +7,7 @@
 terraform {
   # ensures that the Terraform "core" version is at least 1.10 and allows for minor version updates
   # tilde (~) allows the right-most version number to increment
-  required_version = "~> 1.10"
+  required_version = "1.10.4"
 
   # HCP Terraform (CLI-based workflow) configuration
   cloud {
