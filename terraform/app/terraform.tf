@@ -13,8 +13,10 @@ terraform {
   cloud {
     organization = "lukes-org"
     workspaces {
-      name = "hono-app-ecs" # NOTE: can't use var.app_name here (because it's not available at this point... I think?)
+      # project = "Hono App" # do i need to specify the project here? If so, is it "hono-app" or "Hono App"?
+      name    = "hono-app-ecs" # NOTE: can't use var.app_name here (because it's not available at this point... I think?)
     }
+
   }
 
   # Local backend configuration (optional b/c Terraform uses "local" backend by default)
