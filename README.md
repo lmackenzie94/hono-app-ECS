@@ -2,6 +2,8 @@
 
 _A simple Hono Node.js application that implements a view counter using AWS DynamoDB. Deployed on AWS ECS Fargate._
 
+**⚠️ Not currently deployed (to save money) but I promise it works! 😉**
+
 ---
 
 - **Application**: Node.js app using Hono framework
